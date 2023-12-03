@@ -46,11 +46,17 @@ const todoList = () => {
     const toDisplayableList = (list) => {
       // Format the To-Do list here, and return the output string
       // as per the format given above.
+      let dt = new Date()
+      dt = dt.toISOString().split("T")[0]
       arr=[]
       list.forEach(i=>{
-        if (i.completed){
+        if (i.completed && i.dueDate!=dt){
             arr.push(`[x]`+` `+i.title+` `+i.dueDate);
-        } else{
+        } else if (i.completed && i.dueDate==dt){
+            arr.push(`[x]`+` `+i.title);
+        }else if (i.completed==false && i.dueDate==dt){
+            arr.push(`[ ]`+` `+i.title);
+        }else{
             arr.push(`[ ]`+` `+i.title+` `+i.dueDate);
         }
       })
