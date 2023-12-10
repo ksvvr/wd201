@@ -19,20 +19,24 @@ module.exports = (sequelize, DataTypes) => {
 
       console.log("Overdue");
       const overdueTasks = await Todo.overdue();
-      console.log(overdueTasks);
-
+      let arr1 = overdueTasks
+        .map((todo) => todo.displayableString())
+        .join("\n");
+      console.log(arr1);
       console.log("\n");
 
       console.log("Due Today");
       // FILL IN HERE
       const dueTodayList = await Todo.dueToday();
-      console.log(dueTodayList);
+      arr1 = dueTodayList.map((todo) => todo.displayableString1()).join("\n");
+      console.log(arr1);
       console.log("\n");
 
       console.log("Due Later");
       // FILL IN HERE
       const dueLaterList = await Todo.dueLater();
-      console.log(dueLaterList);
+      arr1 = dueLaterList.map((todo) => todo.displayableString()).join("\n");
+      console.log(arr1);
     }
 
     static async overdue() {
@@ -46,8 +50,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       });
-      let arr1 = arr.map((todo) => todo.displayableString()).join("\n");
-      return arr1;
+      return arr;
     }
 
     static async dueToday() {
@@ -61,8 +64,8 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       });
-      let arr1 = arr.map((todo) => todo.displayableString1()).join("\n");
-      return arr1;
+
+      return arr;
     }
 
     static async dueLater() {
@@ -76,8 +79,8 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       });
-      let arr1 = arr.map((todo) => todo.displayableString()).join("\n");
-      return arr1;
+
+      return arr;
     }
 
     static async markAsComplete(id) {
