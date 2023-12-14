@@ -2,7 +2,7 @@ const request = require("supertest");
 
 const db = require("../models/index");
 const app = require("../app");
-  
+
 let server, agent;
 
 describe("Todo Application", function () {
@@ -29,7 +29,7 @@ describe("Todo Application", function () {
     });
     expect(response.statusCode).toBe(200);
     expect(response.header["content-type"]).toBe(
-      "application/json; charset=utf-8"
+      "application/json; charset=utf-8",
     );
     const parsedResponse = JSON.parse(response.text);
     expect(parsedResponse.id).toBeDefined();
@@ -73,8 +73,8 @@ describe("Todo Application", function () {
 
   test("Deletes a todo with the given ID if it exists and sends a boolean response", async () => {
     // FILL IN YOUR CODE HERE
-    const res = await agent.delete("/todos/2")
+    const res = await agent.delete("/todos/2");
     const parsedResponse = JSON.parse(res.text);
-    expect(parsedResponse).toBe(true)
+    expect(parsedResponse).toBe(true);
   });
 });
