@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 const express = require("express");
 const app = express();
 const { Todo } = require("./models");
@@ -9,14 +10,29 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", async (request, response) => {
+  const dt = new Date().toISOString().split("T")[0];
   const allTodos = await Todo.getTodos();
+  let odTodos = [],
+    dtTodos = [],
+    dlTodos = [];
+  await allTodos.forEach((i) => {
+    if (i.dueDate < dt) odTodos.push(i);
+    else if (i.dueDate == dt) dtTodos.push(i);
+    else dlTodos.push(i);
+  });
   if (request.accepts("html")) {
     response.render("index.ejs", {
       allTodos,
+      odTodos,
+      dtTodos,
+      dlTodos,
     });
   } else {
     response.json({
       allTodos,
+      odTodos,
+      dtTodos,
+      dlTodos,
     });
   }
   response.render("index.ejs");

@@ -1,9 +1,30 @@
+<h5 class="font-bold">Overdue <span id="count-overdue"><%- odTodos.length %></span></h5>
 <table>
-    <% for(var i = 0; i < allTodos.length ;i++){ %>
+    <% for(var i = 0; i < odTodos.length ;i++){ %>
             <tr> 
                 <td>
-                    <%= allTodos[i].title %>
+                    <input type="checkbox" class="mr-2"><%= odTodos[i].title %>
                 </td>
             </tr>
     <% } %>
-</table>
+</table> 
+<h5 class="font-bold">Due Today <span id="count-due-today"><%- dtTodos.length %></span></h5>
+<table>
+    <% for(var i = 0; i < dtTodos.length ;i++){ %>
+            <tr> 
+                <td>
+                    <input type="checkbox" class="mr-2"><%= dtTodos[i].title %>
+                </td>
+            </tr>
+    <% } %>
+</table> 
+<h5 class="font-bold">Due Later <span id="count-due-later"><%- dlTodos.length %></span></h5>
+<table>
+    <% for(var i = 0; i < dlTodos.length ;i++){ %>
+            <tr> 
+                <td>
+                    <input type="checkbox" class="mr-2"><%= dlTodos[i].title %>
+                </td> 
+            </tr>
+    <% } %>
+</table> 
