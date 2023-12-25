@@ -9,7 +9,7 @@
     <title>Todo-App</title>
     <script>
         function updateTodo(id){
-            fetch(`/todos/${id}/markAsCompleted`,{
+            fetch(`/todos/${id}/setCompletionStatus`,{
                 method:"put",
                 headers:{"Content-Type":"application/json"},
             })
