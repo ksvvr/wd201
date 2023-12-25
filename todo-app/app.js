@@ -4,8 +4,9 @@ const app = express();
 const { Todo } = require("./models");
 const bodyParser = require("body-parser");
 const path = require("path");
+const { encode } = require("punycode");
 app.use(bodyParser.json());
-
+app.use(express.urlencoded({ extended: false }));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -64,8 +65,8 @@ app.get("/todos/:id", async function (request, response) {
 
 app.post("/todos", async function (request, response) {
   try {
-    const todo = await Todo.addTodo(request.body);
-    return response.json(todo);
+    await Todo.addTodo(request.body);
+    return response.redirect("/");
   } catch (error) {
     console.log(error);
     return response.status(422).json(error);
@@ -83,7 +84,17 @@ app.put("/todos/:id/markAsCompleted", async function (request, response) {
   }
 });
 
-app.delete("/todos/:id", async function (request, response) {
+app.delete("/todos/:id", async (request, response) => {
+  console.log("Delete a todo by ID: ", request.params.id);
+  try {
+    await Todo.remove(request.params.id);
+    return response.json({ success: true });
+  } catch (error) {
+    return response.status(422).json(error);
+  }
+});
+
+app.delete("/todosszp/:id", async function (request, response) {
   console.log("We have to delete a Todo with ID: ", request.params.id);
   // FILL IN YOUR CODE HERE
   if (await Todo.findByPk(request.params.id)) {

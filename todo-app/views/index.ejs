@@ -4,9 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--link rel="stylesheet" href="./css/styles.css"-->
+    <link rel="stylesheet" href="./css/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Todo-App</title>
+    <script>
+        function updateTodo(id){
+            fetch(`/todos/${id}/markAsCompleted`,{
+                method:"put",
+                headers:{"Content-Type":"application/json"},
+            })
+            .then((res)=>{
+                if(res.ok){
+                    window.location.reload();
+                }   
+            })
+            .catch((err)=>console.error(err));
+        }
+        function deleteTodo(id){
+            fetch(`/todos/${id}`,{
+                method:"delete",
+                headers:{"Content-Type":"application/json"},
+            })
+            .then((res)=>{
+                if(res.ok){
+                    window.location.reload();
+                }   
+            })
+            .catch((err)=>console.error(err));
+        }
+    </script>
 </head>
 
 <body>
@@ -14,8 +40,8 @@
         <%- include('header.ejs') %>
  
             <form action="/todos" method="post">
-                <input class="border-2 ml-2" type="text" placeholder="What's next?" name="title">
-                <input class="border-2 ml-2" type="date" name="dueDate">
+                <input class="border-2 ml-2" type="text" placeholder="What's next?" name="title" required>
+                <input class="border-2 ml-2" type="date" name="dueDate" required> 
                 <button class=" ml-2" type="submit">Add</button>
             </form>
 
