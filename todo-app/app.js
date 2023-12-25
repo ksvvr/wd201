@@ -23,20 +23,17 @@ app.get("/", async (request, response) => {
   });
   if (request.accepts("html")) {
     response.render("index.ejs", {
-      allTodos,
       odTodos,
       dtTodos,
       dlTodos,
     });
   } else {
     response.json({
-      allTodos,
       odTodos,
       dtTodos,
       dlTodos,
     });
   }
-  response.render("index.ejs");
 });
 
 app.get("/", function (request, response) {

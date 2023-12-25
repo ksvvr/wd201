@@ -22,9 +22,9 @@
     <% for(var i=0; i < dtTodos.length ;i++){ %>
         <tr>
             <td class="group flex items-center">
-                <input type="checkbox" class="mr-2">
-                <%= dtTodos[i].title %>
-                <a href="" class="hidden ml-1 group-hover:inline-flex items-center">
+                <input id="todoCheck<%= dtTodos[i].id %>" type="checkbox" class="mr-2" onclick="updateTodo(`<%= dtTodos[i].id %>`);" <%= dtTodos[i].completed? "checked":"" %> >
+                <label for="todoCheck<%= dtTodos[i].id %>" class="cursor-pointer"><%= dtTodos[i].title %></label>
+                <a href="" onclick="deleteTodo(`<%= dtTodos[i].id %>`);" class="hidden ml-1 group-hover:inline-flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -41,9 +41,9 @@
     <% for(var i=0; i < dlTodos.length ;i++){ %>
         <tr>
             <td class="group flex items-center">
-                <input type="checkbox" class="mr-2">
-                <%= dlTodos[i].title %>
-                <a href="" class="hidden ml-1 group-hover:inline-flex items-center">
+                <input id="todoCheck<%= dlTodos[i].id %>" type="checkbox" class="mr-2" onclick="updateTodo(`<%= dlTodos[i].id %>`);" <%= dlTodos[i].completed? "checked":"" %> >
+                <label for="todoCheck<%= dlTodos[i].id %>" class="cursor-pointer"><%= dlTodos[i].title %></label>
+                <a href="" onclick="deleteTodo(`<%= dlTodos[i].id %>`);" class="hidden ml-1 group-hover:inline-flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round"
