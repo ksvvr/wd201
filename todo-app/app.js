@@ -1,11 +1,15 @@
 /* eslint-disable no-unused-vars */
 const express = require("express");
+var csrf = require("tiny-csrf");
 const app = express();
 const { Todo } = require("./models");
 const bodyParser = require("body-parser");
+var cookieParser = require("cookie-parser");
 const path = require("path");
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser("shh!some secret string,I am King"));
+app.use(csrf("abcdefghijklmnopqrstuvwxyz123456", ["POST", "PUT", "DELETE"]));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -28,6 +32,7 @@ app.get("/", async (request, response) => {
       dtTodos,
       dlTodos,
       ciTodos,
+      csrfToken: request.csrfToken(),
     });
   } else {
     response.json({

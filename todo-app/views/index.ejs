@@ -4,14 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
     <link rel="stylesheet" href="./css/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Todo-App</title>
     <script>
+        var token = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content");
         function updateTodo(id){
             fetch(`/todos/${id}/setCompletionStatus`,{
                 method:"put",
                 headers:{"Content-Type":"application/json"},
+                body: JSON.stringify({
+                    "_csrf": token
+                })
             })
             .then((res)=>{
                 if(res.ok){
@@ -24,6 +31,9 @@
             fetch(`/todos/${id}`,{
                 method:"delete",
                 headers:{"Content-Type":"application/json"},
+                body: JSON.stringify({
+                    "_csrf": token
+                })
             })
             .then((res)=>{
                 if(res.ok){
@@ -40,6 +50,7 @@
         <%- include('header.ejs') %>
  
             <form action="/todos" method="post">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <input class="border-2 ml-2" type="text" placeholder="What's next?" name="title" required>
                 <input class="border-2 ml-2" type="date" name="dueDate" required> 
                 <button class=" ml-2" type="submit">Add</button>
