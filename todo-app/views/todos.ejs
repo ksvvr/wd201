@@ -1,4 +1,63 @@
-<h5 class="font-bold inline">Overdue</h5> <span id="count-overdue" class="ml-1 font-bold"><%- odTodos.length %></span>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="<%= csrfToken %>">
+    <link rel="stylesheet" href="./css/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Todo-App</title>
+    <script>
+        var token = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content");
+        function updateTodo(id){
+            fetch(`/todos/${id}/setCompletionStatus`,{
+                method:"put",
+                headers:{"Content-Type":"application/json"},
+                body: JSON.stringify({
+                    "_csrf": token
+                })
+            })
+            .then((res)=>{
+                if(res.ok){
+                    window.location.reload();
+                }   
+            })
+            .catch((err)=>console.error(err));
+        }
+        function deleteTodo(id){
+            fetch(`/todos/${id}`,{
+                method:"delete",
+                headers:{"Content-Type":"application/json"},
+                body: JSON.stringify({
+                    "_csrf": token
+                })
+            })
+            .then((res)=>{
+                if(res.ok){
+                    window.location.reload();
+                }   
+            })
+            .catch((err)=>console.error(err));
+        }
+    </script>
+</head>
+
+<body>
+    <div class="mainDiv">
+        <%- include('header.ejs') %>
+        <a href="/signout" class="bg-lime-300">Signout</a>
+
+        <form action="/todos" method="post">
+            <input class="border-2 ml-2" type="text" placeholder="What's next?" name="title" required>
+            <input class="border-2 ml-2" type="date" name="dueDate" required> 
+            <button class=" ml-2" type="submit">Add</button>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        </form>
+
+        <h5 class="font-bold inline">Overdue</h5> <span id="count-overdue" class="ml-1 font-bold"><%- odTodos.length %></span>
 <table>
     <% for(var i=0; i < odTodos.length ;i++){ %>
         <tr>
@@ -14,7 +73,7 @@
                 </a>
             </td>
         </tr>
-        <% } %>
+        <% } %> 
 </table>
 <h5 class="font-bold inline">Due Today</h5> <span id="count-due-today" class="ml-1 font-bold"><%- dtTodos.length
         %></span>
@@ -73,3 +132,12 @@
         </tr>
         <% } %>
 </table>
+        
+              
+            
+        <%- include('notifications.ejs') %>
+        <%- include('footer.ejs') %>
+    </div>
+</body>
+
+</html>

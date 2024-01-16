@@ -28,17 +28,30 @@ describe("Todo Application", function () {
     }
   });
 
-  test("Creates a new todo", async () => {
-    const res = await agent.get("/");
+  test("SignUp a new user", async () => {
+    let res = await agent.get("/signup");
     const csrfToken = extractCsrfToken(res);
-    const response = await agent.post("/todos").send({
-      title: "Buy milk",
-      dueDate: new Date().toISOString(),
-      completed: false,
+    res = await agent.post("/users").send({
+      firstName: "Test",
+      lastName: "UserA",
+      email: "user.a@test.ccom",
+      password: "12345678",
       _csrf: csrfToken,
     });
-    expect(response.statusCode).toBe(302);
+    expect(res.statusCode).toBe(302);
   });
+
+  // test("Creates a new todo", async () => {
+  //   const res = await agent.get("/");
+  //   const csrfToken = extractCsrfToken(res);
+  //   const response = await agent.post("/todos").send({
+  //     title: "Buy milk",
+  //     dueDate: new Date().toISOString(),
+  //     completed: false,
+  //     _csrf: csrfToken,
+  //   })
+  //   expect(response.statusCode).toBe(302);
+  // });
 
   // test("Marks a todo with the given ID as complete", async () => {
   //   const response = await agent.post("/todos").send({

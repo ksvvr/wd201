@@ -8,58 +8,16 @@
     <link rel="stylesheet" href="./css/styles.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Todo-App</title>
-    <script>
-        var token = document
-            .querySelector('meta[name="csrf-token"]')
-            .getAttribute("content");
-        function updateTodo(id){
-            fetch(`/todos/${id}/setCompletionStatus`,{
-                method:"put",
-                headers:{"Content-Type":"application/json"},
-                body: JSON.stringify({
-                    "_csrf": token
-                })
-            })
-            .then((res)=>{
-                if(res.ok){
-                    window.location.reload();
-                }   
-            })
-            .catch((err)=>console.error(err));
-        }
-        function deleteTodo(id){
-            fetch(`/todos/${id}`,{
-                method:"delete",
-                headers:{"Content-Type":"application/json"},
-                body: JSON.stringify({
-                    "_csrf": token
-                })
-            })
-            .then((res)=>{
-                if(res.ok){
-                    window.location.reload();
-                }   
-            })
-            .catch((err)=>console.error(err));
-        }
-    </script>
 </head>
 
 <body>
     <div class="mainDiv">
         <%- include('header.ejs') %>
- 
-            <form action="/todos" method="post">
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <input class="border-2 ml-2" type="text" placeholder="What's next?" name="title" required>
-                <input class="border-2 ml-2" type="date" name="dueDate" required> 
-                <button class=" ml-2" type="submit">Add</button>
-            </form>
+        <h5>Welcome to the To-Do Manager</h5>
+        <p>New here? <a href="/signup" class="bg-lime-300">Sign Up Here</a></p>
+        <p>Have Account? <a href="/login" class="bg-lime-300">Login Here</a></p>
 
-            <div class="">
-                <%- include('todos.ejs') %>
-            </div>
-            <%- include('footer.ejs') %>
+        <%- include('footer.ejs') %>
     </div>
 </body>
 
