@@ -84,6 +84,9 @@ passport.deserializeUser((id, done) => {
 });
 
 app.get("/", async (request, response) => {
+  if (request.isAuthenticated()) {
+    return response.redirect("/todos");
+  }
   response.render("index", {
     csrfToken: request.csrfToken(),
   });
