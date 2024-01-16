@@ -167,7 +167,7 @@ app.get(
       else dlTodos.push(i);
     });
     if (request.accepts("html")) {
-      response.render("todos.ejs", {
+      response.render("todo.ejs", {
         odTodos,
         dtTodos,
         dlTodos,
